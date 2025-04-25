@@ -9,15 +9,16 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Play, Pause, RotateCcw, User, Mail, Calendar } from 'lucide-react';
+import { CheckedState } from '@radix-ui/react-checkbox';
 
 export default function Home() {
   const [passwords, setPasswords] = useState<string[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [length, setLength] = useState(8);
-  const [useUppercase, setUseUppercase] = useState(true);
-  const [useLowercase, setUseLowercase] = useState(true);
-  const [useNumbers, setUseNumbers] = useState(true);
-  const [useSpecial, setUseSpecial] = useState(true);
+  const [useUppercase, setUseUppercase] = useState<CheckedState>(true);
+  const [useLowercase, setUseLowercase] = useState<CheckedState>(true);
+  const [useNumbers, setUseNumbers] = useState<CheckedState>(true);
+  const [useSpecial, setUseSpecial] = useState<CheckedState>(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [birthDate, setBirthDate] = useState('');
@@ -28,10 +29,10 @@ export default function Home() {
 
     if (isGenerating) {
       generator = new PasswordBruteForce(
-        useUppercase,
-        useLowercase,
-        useNumbers,
-        useSpecial,
+        useUppercase === true,
+        useLowercase === true,
+        useNumbers === true,
+        useSpecial === true,
         length,
         { name, email, birthDate }
       ).generate();
@@ -129,7 +130,7 @@ export default function Home() {
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="uppercase"
-                      checked={useUppercase}
+                      checked={useUppercase === true}
                       onCheckedChange={setUseUppercase}
                     />
                     <Label htmlFor="uppercase">Maiúsculas</Label>
@@ -137,7 +138,7 @@ export default function Home() {
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="lowercase"
-                      checked={useLowercase}
+                      checked={useLowercase === true}
                       onCheckedChange={setUseLowercase}
                     />
                     <Label htmlFor="lowercase">Minúsculas</Label>
@@ -145,7 +146,7 @@ export default function Home() {
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="numbers"
-                      checked={useNumbers}
+                      checked={useNumbers === true}
                       onCheckedChange={setUseNumbers}
                     />
                     <Label htmlFor="numbers">Números</Label>
@@ -153,7 +154,7 @@ export default function Home() {
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="special"
-                      checked={useSpecial}
+                      checked={useSpecial === true}
                       onCheckedChange={setUseSpecial}
                     />
                     <Label htmlFor="special">Caracteres Especiais</Label>
